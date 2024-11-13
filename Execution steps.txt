@@ -1,0 +1,16 @@
+1) refer the ARM templates created from azure for deployment of Kubernetes cluster over azure portal. either you can deploy from portal or CLI.
+2) a single node already configured under the azure Kubernetes. refer the overview section of azure Kubernetes under which you can see the node details 
+3) go to node and follow below stesp to configure Prometheus monitoring over Kubernetes cluster.
+4) run below command to install Prometheus repo for Kubernetes. it will install the Prometheus packge repo for you to setup thing. here i choose community repo. 	
+CMD: - helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+5) check if any updates required for the same using below command 
+CMD: - helm repo update
+6) install the Prometheus over the node using below command
+CMD: - helm install prometheus prometheus-community/Prometheus
+7) the Prometheus server is installed over Kubernetes service but still cant be accessible outside it so need to expose it and set as external server using below command because it has its cluster IP and cant accessible outside the service.
+CMD: - kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
+9)  once above execution done, the one more external server for Prometheus with "-ext" added with name. use below cmd to view the details for external server created.
+CMD: - minikube service prometheus-server-ext
+10)  all the details showing there over CLI. use the URL showing with external server to jump onto Prometheus server for more. 
+11) over Prometheus server, you can configured the all the details and logs for the Kubernetes cluster and check the status accordingly.
+
